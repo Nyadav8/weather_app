@@ -1,13 +1,16 @@
 import './cardComponent.css'
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef } from 'react';
 export default function CardComponent() {
     let [search,setsearch]=useState("");
     let [cities,setcities]=useState([]);
     let [selectedcity,setselectedcity]=useState({});
     let [weathershow,setweathershow]=useState({})
+    let [show,setshow]=useState(false);
+    const ref = useRef(null);
 
     let handleCityChange=(event)=>{
         console.log(event);
+        setshow(true);
         setsearch(event.target.value);
     }
     let handleClick=(city)=>{
@@ -36,6 +39,20 @@ export default function CardComponent() {
      
         
     }
+
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            console.log("called before");
+            setshow(false)
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        };
+    });
 
 
     const callCityAPI = async () => {
@@ -93,12 +110,14 @@ export default function CardComponent() {
                 <div className='flex-row'>
                     <span style={{display:"inline-flex",alignItems:"center",fontWeight:"700",fontSize:"0.9rem"}}>Search by City</span>
                     <div style={{width:"80%",position:"relative"}}> 
-                    <input className='input_tag' placeholder='Search city' onChange={(e)=>handleCityChange(e)} type="text" name="" id="" />
-                    {cities?.length>0 &&<div className='searchPopup' > 
+                    <div ref={ref}>
+                    <input  className='input_tag' placeholder='Search city'  onChange={(e)=>handleCityChange(e)} type="text" name="" id="" />
+                    {cities?.length>0 &&show &&<div className='searchPopup' > 
                         {cities?.map((city,index)=>{
                             return <div key={index} onClick={()=>handleClick(city)} className='searchPopup-item' >{city?.name},{city?.country}</div>
                         })}
                     </div>}
+                    </div>
                     </div>
                     
                 </div>
