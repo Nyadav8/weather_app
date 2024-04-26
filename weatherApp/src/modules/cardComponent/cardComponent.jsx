@@ -25,31 +25,36 @@ export default function CardComponent() {
         }).then((res)=>{
             return res.json();
         }).then((results) => {return results;})
-        .catc((err)=>{
+        
+        .catch((err)=>{
             console.error(err);
-        })}
+        })
+        return response;}
         catch(err){
             console.error(err);
         }
-        console.log(response,"testing api");
-        return response;
+     
+        
     }
 
 
     const callCityAPI = async () => {
-        try{const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${search}`, {
+        try{
+            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${search}`, {
             method: 'GET',
             
         }).then((res)=>{
             return res.json()
         }).then((results) => {return results;}).catch((err)=>{
             console.error(err);
-        })}
+        })
+        return response;
+        }
         catch(err) {
             console.error(err);
         }
         
-        return response;
+        
     };
 
     useEffect(()=>{
