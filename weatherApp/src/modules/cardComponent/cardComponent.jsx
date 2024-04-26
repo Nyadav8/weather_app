@@ -21,7 +21,7 @@ export default function CardComponent() {
         let todayDate=new Date();
         let date=todayDate.getFullYear()+'-'+(todayDate.getMonth()>10?todayDate.getMonth():'0'+todayDate.getMonth())+'-'+(todayDate.getDate()>10?todayDate.getDate():'0'+todayDate.getDate());
         try{const response=await fetch(`https://api.open-meteo.com/v1/dwd-icon?latitude=${selectedcity.latitude}&longitude=${selectedcity.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&start_date=${date}&end_date=${date}`,{
-            method: 'GET',
+            
         }).then((res)=>{
             return res.json();
         }).then((results) => {return results;})
@@ -40,10 +40,7 @@ export default function CardComponent() {
 
     const callCityAPI = async () => {
         try{
-            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${search}`, {
-            method: 'GET',
-            
-        }).then((res)=>{
+            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${search}`,{}).then((res)=>{
             return res.json()
         }).then((results) => {return results;}).catch((err)=>{
             console.error(err);
