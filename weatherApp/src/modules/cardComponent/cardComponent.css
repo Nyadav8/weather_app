@@ -64,7 +64,7 @@
     color: black;
     font-weight: 600;
     max-height: 200px;
-    overflow: scroll;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
 }
